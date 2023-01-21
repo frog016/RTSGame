@@ -4,6 +4,8 @@ using Zenject;
 
 public class BuildingArea : MonoBehaviour
 {
+    [SerializeField] private LayerMask _layer;
+
     private IFactory _factory;
 
     [Inject]
@@ -22,6 +24,6 @@ public class BuildingArea : MonoBehaviour
 
     public bool IsEmpty(Vector3 position)
     {
-        return !Physics.CheckBox(position, Vector3.one / 2, Quaternion.identity, gameObject.layer);
+        return !Physics.CheckBox(position, Vector3.one / 2, Quaternion.identity, _layer);
     }
 }

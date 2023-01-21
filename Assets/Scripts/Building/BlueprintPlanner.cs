@@ -18,7 +18,6 @@ public class BlueprintPlanner : MonoBehaviour
 
         _currentBlueprint = _factory.CreateFromPrefabForComponent(blueprintPrefab, position, Quaternion.identity);
         _currentBlueprint.ObjectPlacedEvent += OnBuildingCreated;
-        _currentBlueprint.GetComponent<DraggableObject>().BeginDrag();
     }
 
     private void CheckForExistingBlueprint()

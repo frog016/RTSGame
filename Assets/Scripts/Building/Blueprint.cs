@@ -2,14 +2,15 @@ using System;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(SnappableObject))]
 public class Blueprint : MonoBehaviour
 {
     [SerializeField] private Building _buildingPrefab;
 
     public Action ObjectPlacedEvent;
-    public Vector3 Size => _buildingPrefab.Size;
 
     private BuildingArea _buildingArea;
+    private SnappableObject _snappable;
 
     [Inject]
     public void Constructor(BuildingArea buildingArea)
@@ -17,14 +18,29 @@ public class Blueprint : MonoBehaviour
         _buildingArea = buildingArea;
     }
 
-    public bool TryPlaceBlueprint()
+    private void Awake()
+    {
+        _snappable = GetComponent<SnappableObject>();
+        _snappable.Offset = new Vector3(0, _buildingPrefab.Size.y, 0) / 2;
+    }
+
+    private void OnEnable()
+    {
+        _snappable.ObjectPlacedEvent += TryPlaceBlueprint;
+    }
+
+    private void OnDisable()
+    {
+        _snappable.ObjectPlacedEvent -= TryPlaceBlueprint;
+    }
+
+    public void TryPlaceBlueprint()
     {
         if (!_buildingArea.IsEmpty(transform.position))
-            return false;
+            return;
 
         _buildingArea.Build(_buildingPrefab, transform.position, transform.rotation);
         ObjectPlacedEvent?.Invoke();
-
-        return true;
+        Destroy(gameObject);
     }
 }

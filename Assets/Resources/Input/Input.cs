@@ -35,6 +35,24 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Place"",
+                    ""type"": ""Button"",
+                    ""id"": ""08dae605-2a2b-4c9a-8954-1ef5e1e9e1e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Detach"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2dc61e0-1cb8-49fe-8e26-0344a563aa13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +64,28 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gameplay"",
                     ""action"": ""Follow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6547d454-6e5b-4251-a8f4-857f1b2b703d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Detach"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99589fc8-17c2-4638-b14b-3411db3af9d4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Place"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -63,6 +103,8 @@ public partial class @Input : IInputActionCollection2, IDisposable
         // Building
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_Follow = m_Building.FindAction("Follow", throwIfNotFound: true);
+        m_Building_Place = m_Building.FindAction("Place", throwIfNotFound: true);
+        m_Building_Detach = m_Building.FindAction("Detach", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -123,11 +165,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Building;
     private IBuildingActions m_BuildingActionsCallbackInterface;
     private readonly InputAction m_Building_Follow;
+    private readonly InputAction m_Building_Place;
+    private readonly InputAction m_Building_Detach;
     public struct BuildingActions
     {
         private @Input m_Wrapper;
         public BuildingActions(@Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @Follow => m_Wrapper.m_Building_Follow;
+        public InputAction @Place => m_Wrapper.m_Building_Place;
+        public InputAction @Detach => m_Wrapper.m_Building_Detach;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -140,6 +186,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Follow.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnFollow;
                 @Follow.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnFollow;
                 @Follow.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnFollow;
+                @Place.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPlace;
+                @Place.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPlace;
+                @Place.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnPlace;
+                @Detach.started -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDetach;
+                @Detach.performed -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDetach;
+                @Detach.canceled -= m_Wrapper.m_BuildingActionsCallbackInterface.OnDetach;
             }
             m_Wrapper.m_BuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -147,6 +199,12 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Follow.started += instance.OnFollow;
                 @Follow.performed += instance.OnFollow;
                 @Follow.canceled += instance.OnFollow;
+                @Place.started += instance.OnPlace;
+                @Place.performed += instance.OnPlace;
+                @Place.canceled += instance.OnPlace;
+                @Detach.started += instance.OnDetach;
+                @Detach.performed += instance.OnDetach;
+                @Detach.canceled += instance.OnDetach;
             }
         }
     }
@@ -163,5 +221,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     public interface IBuildingActions
     {
         void OnFollow(InputAction.CallbackContext context);
+        void OnPlace(InputAction.CallbackContext context);
+        void OnDetach(InputAction.CallbackContext context);
     }
 }

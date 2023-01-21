@@ -13,6 +13,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Place",
+                    "type": "Button",
+                    "id": "08dae605-2a2b-4c9a-8954-1ef5e1e9e1e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Detach",
+                    "type": "Button",
+                    "id": "b2dc61e0-1cb8-49fe-8e26-0344a563aa13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -24,6 +42,28 @@
                     "processors": "",
                     "groups": "Gameplay",
                     "action": "Follow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6547d454-6e5b-4251-a8f4-857f1b2b703d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Detach",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99589fc8-17c2-4638-b14b-3411db3af9d4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
