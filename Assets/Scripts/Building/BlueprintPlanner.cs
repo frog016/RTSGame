@@ -1,19 +1,36 @@
 using UnityEngine;
+using Zenject;
 
 public class BlueprintPlanner : MonoBehaviour
 {
-    [SerializeField] private Blueprint _blueprintPrefab;
-
     private IFactory _factory;
+    private Blueprint _currentBlueprint;
 
+    [Inject]
     public void Constructor(IFactory factory)
     {
         _factory = factory;
     }
 
-    public void CreateBlueprint()
+    public void CreateBlueprint(Vector3 position, Blueprint blueprintPrefab)
     {
-        var blueprint = _factory.Create(_blueprintPrefab);
-        blueprint.GetComponent<IDraggable>().BeginDrag();
+        CheckForExistingBlueprint();
+
+        _currentBlueprint = _factory.CreateFromPrefabForComponent(blueprintPrefab, position, Quaternion.identity);
+        _currentBlueprint.ObjectPlacedEvent += OnBuildingCreated;
+        _currentBlueprint.GetComponent<DraggableObject>().BeginDrag();
+    }
+
+    private void CheckForExistingBlueprint()
+    {
+        if (_currentBlueprint == null)
+            return;
+
+        Destroy(_currentBlueprint.gameObject);
+    }
+
+    private void OnBuildingCreated()
+    {
+        _currentBlueprint = null;
     }
 }

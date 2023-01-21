@@ -1,0 +1,40 @@
+{
+    "name": "Input",
+    "maps": [
+        {
+            "name": "Building",
+            "id": "27e860ee-70b4-44f6-91e0-663a1f53aa72",
+            "actions": [
+                {
+                    "name": "Follow",
+                    "type": "Value",
+                    "id": "8576f931-7f53-4c76-b44d-a7f83a13be48",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "baa1d4a0-53e3-4a04-a206-bbe205646956",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gameplay",
+                    "action": "Follow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Gameplay",
+            "bindingGroup": "Gameplay",
+            "devices": []
+        }
+    ]
+}

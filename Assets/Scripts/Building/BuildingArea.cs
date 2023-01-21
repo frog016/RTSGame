@@ -1,14 +1,23 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class BuildingArea : MonoBehaviour
 {
+    private IFactory _factory;
+
+    [Inject]
+    public void Constructor(IFactory factory)
+    {
+        _factory = factory;
+    }
+
     public void Build(Building building, Vector3 position, Quaternion rotation)
     {
         if (!IsEmpty(position))
             throw new InvalidOperationException("The position you have chosen is occupied. Please check it before placing.");
 
-        var createdBuilding = Instantiate(building, position, rotation);
+        var createdBuilding = _factory.CreateFromPrefabForComponent(building, position, rotation);
     }
 
     public bool IsEmpty(Vector3 position)
