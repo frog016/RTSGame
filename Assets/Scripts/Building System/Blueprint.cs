@@ -36,7 +36,7 @@ public class Blueprint : MonoBehaviour
 
     public void TryPlaceBlueprint()
     {
-        if (!_buildingArea.IsEmpty(transform.position))
+        if (!_buildingArea.IsValidPosition(transform.position, _buildingPrefab.Size, transform.rotation))
             return;
 
         _buildingArea.Build(_buildingPrefab, transform.position, transform.rotation);

@@ -47,3 +47,4 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 64
+  _size: {x: 10, y: 10}
