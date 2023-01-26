@@ -90,6 +90,56 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Command"",
+            ""id"": ""7b1c69ec-3c2d-43f3-9a4d-6839a3928b08"",
+            ""actions"": [
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Value"",
+                    ""id"": ""fb1a929f-b99d-4e50-9bc9-b0a1442eaa9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""30198ee5-6aab-4e9c-b3ac-0086a76d8a1d"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""e7ddc449-36fe-4c44-94c1-683f43a8b004"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Binding"",
+                    ""id"": ""bc48ccc6-aa28-479c-acd6-56b727268899"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -105,6 +155,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_Building_Follow = m_Building.FindAction("Follow", throwIfNotFound: true);
         m_Building_Place = m_Building.FindAction("Place", throwIfNotFound: true);
         m_Building_Detach = m_Building.FindAction("Detach", throwIfNotFound: true);
+        // Command
+        m_Command = asset.FindActionMap("Command", throwIfNotFound: true);
+        m_Command_Select = m_Command.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -209,6 +262,39 @@ public partial class @Input : IInputActionCollection2, IDisposable
         }
     }
     public BuildingActions @Building => new BuildingActions(this);
+
+    // Command
+    private readonly InputActionMap m_Command;
+    private ICommandActions m_CommandActionsCallbackInterface;
+    private readonly InputAction m_Command_Select;
+    public struct CommandActions
+    {
+        private @Input m_Wrapper;
+        public CommandActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_Command_Select;
+        public InputActionMap Get() { return m_Wrapper.m_Command; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CommandActions set) { return set.Get(); }
+        public void SetCallbacks(ICommandActions instance)
+        {
+            if (m_Wrapper.m_CommandActionsCallbackInterface != null)
+            {
+                @Select.started -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
+            }
+            m_Wrapper.m_CommandActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
+            }
+        }
+    }
+    public CommandActions @Command => new CommandActions(this);
     private int m_GameplaySchemeIndex = -1;
     public InputControlScheme GameplayScheme
     {
@@ -223,5 +309,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnFollow(InputAction.CallbackContext context);
         void OnPlace(InputAction.CallbackContext context);
         void OnDetach(InputAction.CallbackContext context);
+    }
+    public interface ICommandActions
+    {
+        void OnSelect(InputAction.CallbackContext context);
     }
 }

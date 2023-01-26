@@ -17,6 +17,20 @@ public class AreaSelector : MonoBehaviour
         _input = input;
     }
 
+    private void OnEnable()
+    {
+        _input.Command.Select.started += StartSelecting;
+        _input.Command.Select.performed += UpdateArea;
+        _input.Command.Select.canceled += EndSelecting;
+    }
+    
+    private void OnDisable()
+    {
+        _input.Command.Select.started -= StartSelecting;
+        _input.Command.Select.performed -= UpdateArea;
+        _input.Command.Select.canceled -= EndSelecting;
+    }
+
     private void StartSelecting(InputAction.CallbackContext callbackContext)
     {
         _startPoint = callbackContext.action.ReadValue<Vector2>();
@@ -38,6 +52,7 @@ public class AreaSelector : MonoBehaviour
 
     private static Rect GetRectFromPoints(Vector2 start, Vector2 end)
     {
-        return new Rect(start, end - start);
+        var size = end - start;
+        return new Rect(start, size);
     }
 }

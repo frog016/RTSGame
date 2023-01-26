@@ -68,6 +68,56 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Command",
+            "id": "7b1c69ec-3c2d-43f3-9a4d-6839a3928b08",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Value",
+                    "id": "fb1a929f-b99d-4e50-9bc9-b0a1442eaa9e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Modifier",
+                    "id": "30198ee5-6aab-4e9c-b3ac-0086a76d8a1d",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "e7ddc449-36fe-4c44-94c1-683f43a8b004",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Binding",
+                    "id": "bc48ccc6-aa28-479c-acd6-56b727268899",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": [

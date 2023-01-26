@@ -12,9 +12,4 @@ public static class MathUtilities
     {
         return bounds.Contains(otherBounds.min) && bounds.Contains(otherBounds.max);
     }
-
-    public static Vector3 ToXZPlane(this Vector3 vector)
-    {
-        return new Vector3(vector.x, 0, vector.z);
-    }
 }
