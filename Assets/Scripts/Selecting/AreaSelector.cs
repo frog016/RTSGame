@@ -9,6 +9,7 @@ public class AreaSelector : MonoBehaviour
     public event Action<Rect> AreaUpdatedEvent;
 
     private Vector2 _startPoint;
+    private Vector2 _endPoint;
     private Input _input;
 
     [Inject]
@@ -38,15 +39,14 @@ public class AreaSelector : MonoBehaviour
 
     private void UpdateArea(InputAction.CallbackContext callbackContext)
     {
-        var endPoint = callbackContext.action.ReadValue<Vector2>();
-        var rect = GetRectFromPoints(_startPoint, endPoint);
+        _endPoint = callbackContext.action.ReadValue<Vector2>();
+        var rect = GetRectFromPoints(_startPoint, _endPoint);
         AreaUpdatedEvent?.Invoke(rect);
     }
 
     private void EndSelecting(InputAction.CallbackContext callbackContext)
     {
-        var endPoint = callbackContext.action.ReadValue<Vector2>();
-        var rect = GetRectFromPoints(_startPoint, endPoint);
+        var rect = GetRectFromPoints(_startPoint, _endPoint);
         AreaSelectedEvent?.Invoke(rect);
     }
 

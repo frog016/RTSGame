@@ -12,4 +12,13 @@ public static class MathUtilities
     {
         return bounds.Contains(otherBounds.min) && bounds.Contains(otherBounds.max);
     }
+
+    public static Vector2[] GetRectVertices(this Rect rect)
+    {
+        return new Vector2[]
+        {
+            rect.min, new Vector2(rect.xMax, rect.yMin),
+            rect.max, new Vector2(rect.xMin, rect.yMax)
+        };
+    }
 }

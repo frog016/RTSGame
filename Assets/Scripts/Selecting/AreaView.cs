@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(AreaSelector))]
 public class AreaView : MonoBehaviour
 {
-    [SerializeField] private RectTransform _rectTransform;
-
     private IAreaDrawer _areaDrawer;
     private AreaSelector _areaSelector;
 
-    private void Awake()
+    [Inject]
+    public void Constructor(IAreaDrawer areaDrawer, AreaSelector areaSelector)
     {
-        _areaDrawer = new ScreenAreaDrawer(_rectTransform);
+        _areaDrawer = areaDrawer;
+        _areaSelector = areaSelector;
 
-        _areaSelector = GetComponent<AreaSelector>();
         _areaSelector.AreaUpdatedEvent += OnAreaUpdated;
         _areaSelector.AreaSelectedEvent += OnAreaSelected;
     }
