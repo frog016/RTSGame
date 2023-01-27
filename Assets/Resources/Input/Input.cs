@@ -103,6 +103,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ActionPoint"",
+                    ""type"": ""Value"",
+                    ""id"": ""ae2f8741-9e6b-4644-8792-b4243cb6abda"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -138,6 +147,39 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""e23644a6-7144-41f4-8bd7-24b5ecf17e4e"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionPoint"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""50f548aa-5e34-414c-a48a-29b24d26485a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionPoint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""c212760f-f0dd-401f-84b7-e5ef05cd0742"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionPoint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -158,6 +200,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         // Command
         m_Command = asset.FindActionMap("Command", throwIfNotFound: true);
         m_Command_Select = m_Command.FindAction("Select", throwIfNotFound: true);
+        m_Command_ActionPoint = m_Command.FindAction("ActionPoint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -267,11 +310,13 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Command;
     private ICommandActions m_CommandActionsCallbackInterface;
     private readonly InputAction m_Command_Select;
+    private readonly InputAction m_Command_ActionPoint;
     public struct CommandActions
     {
         private @Input m_Wrapper;
         public CommandActions(@Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_Command_Select;
+        public InputAction @ActionPoint => m_Wrapper.m_Command_ActionPoint;
         public InputActionMap Get() { return m_Wrapper.m_Command; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +329,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_CommandActionsCallbackInterface.OnSelect;
+                @ActionPoint.started -= m_Wrapper.m_CommandActionsCallbackInterface.OnActionPoint;
+                @ActionPoint.performed -= m_Wrapper.m_CommandActionsCallbackInterface.OnActionPoint;
+                @ActionPoint.canceled -= m_Wrapper.m_CommandActionsCallbackInterface.OnActionPoint;
             }
             m_Wrapper.m_CommandActionsCallbackInterface = instance;
             if (instance != null)
@@ -291,6 +339,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @ActionPoint.started += instance.OnActionPoint;
+                @ActionPoint.performed += instance.OnActionPoint;
+                @ActionPoint.canceled += instance.OnActionPoint;
             }
         }
     }
@@ -313,5 +364,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
     public interface ICommandActions
     {
         void OnSelect(InputAction.CallbackContext context);
+        void OnActionPoint(InputAction.CallbackContext context);
     }
 }
