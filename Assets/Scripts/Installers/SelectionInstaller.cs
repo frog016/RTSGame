@@ -5,7 +5,6 @@ public class SelectionInstaller : MonoInstaller
 {
     [SerializeField] private AreaSelector _areaSelector;
     [SerializeField] private RectTransform _selectionBox;
-    [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _selectorLayer;
 
     public override void InstallBindings()
@@ -38,6 +37,6 @@ public class SelectionInstaller : MonoInstaller
             .Bind<ISelector>()
             .To<PhysicSelector>()
             .AsSingle()
-            .WithArguments(_camera, _selectorLayer);
+            .WithArguments(_selectorLayer);
     }
 }

@@ -11,13 +11,11 @@ public class SnappableObject : MonoBehaviour
     public Action ObjectPlacedEvent;
 
     private Input _input;
-    private Camera _camera;
 
     [Inject]
     public void Constructor(Input input)
     {
         _input = input;
-        _camera = Camera.main;
     }
 
     private void OnEnable()
@@ -37,11 +35,8 @@ public class SnappableObject : MonoBehaviour
     private void SnapToSurface(InputAction.CallbackContext callbackContext)
     {
         var screenPosition = callbackContext.action.ReadValue<Vector2>();
-        var ray = _camera.ScreenPointToRay(screenPosition);
-        if (Physics.Raycast(ray, out var hit, 100, _surfaceLayer))
-        {
-            transform.position = hit.point + Offset;
-        }
+        if (Convertor.ScreenToSurface(screenPosition, _surfaceLayer, out var point))
+            transform.position = point + Offset;
     }
 
     private void PlaceToSurface(InputAction.CallbackContext callbackContext)

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -9,8 +7,7 @@ public class BuildingButton : MonoBehaviour
 {
     [SerializeField] private Blueprint _blueprintPrefab;
     [SerializeField] private BlueprintPlanner _blueprintPlanner;
-    [SerializeField] private Camera _activeCamera;
-    
+
     private Input _input;
     private Button _buildingButton;
 
@@ -23,18 +20,18 @@ public class BuildingButton : MonoBehaviour
     private void OnEnable()
     {
         _buildingButton ??= GetComponent<Button>();
-        _buildingButton.onClick.AddListener(CreateBlueprintOnClick);
+        _buildingButton.onClick.AddListener(CreateBlueprint);
     }
 
-    private void CreateBlueprintOnClick()
+    private void CreateBlueprint()
     {
         var mousePosition = _input.Building.Follow.ReadValue<Vector2>();
-        var position = _activeCamera.ScreenToWorldPoint(mousePosition);
+        Convertor.ScreenToSurface(mousePosition, out var position);
         _blueprintPlanner.CreateBlueprint(position, _blueprintPrefab);
     }
 
     private void OnDisable()
     {
-        _buildingButton.onClick.RemoveListener(CreateBlueprintOnClick);
+        _buildingButton.onClick.RemoveListener(CreateBlueprint);
     }
 }

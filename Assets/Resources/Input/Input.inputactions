@@ -90,6 +90,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "AdditionalActionPoint",
+                    "type": "Button",
+                    "id": "552c93e9-e5bd-45f6-b8ec-771b9fd6b705",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -128,7 +137,7 @@
                 },
                 {
                     "name": "Modifier",
-                    "id": "e23644a6-7144-41f4-8bd7-24b5ecf17e4e",
+                    "id": "93595781-b42b-4e9d-88e9-72696fe0773c",
                     "path": "OneModifier",
                     "interactions": "",
                     "processors": "",
@@ -139,7 +148,7 @@
                 },
                 {
                     "name": "modifier",
-                    "id": "50f548aa-5e34-414c-a48a-29b24d26485a",
+                    "id": "c696d733-a575-4fcf-ac41-5444b2f85777",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
@@ -150,12 +159,56 @@
                 },
                 {
                     "name": "binding",
-                    "id": "c212760f-f0dd-401f-84b7-e5ef05cd0742",
+                    "id": "1a119419-07de-4aef-be20-2394e522f34b",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ActionPoint",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Modifier",
+                    "id": "69ea4793-071b-4953-afd8-6f8211ea1119",
+                    "path": "TwoModifiers",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdditionalActionPoint",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier1",
+                    "id": "bd9bbf35-2d5e-482e-aeca-1875ebda52cb",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdditionalActionPoint",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "modifier2",
+                    "id": "bb04593d-9f7d-4ba2-aad5-4f87d6b8b337",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdditionalActionPoint",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "bafdb2f0-3d3a-419c-926a-6c14b5afeee4",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdditionalActionPoint",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

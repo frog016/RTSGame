@@ -2,7 +2,7 @@
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Movement : MonoBehaviour, IMovement
+public class NavMeshMovement : MonoBehaviour, IMovement
 {
     [SerializeField] private float _speed;
 
@@ -14,10 +14,13 @@ public class Movement : MonoBehaviour, IMovement
         ConfigureAgent();
     }
 
-    public void MoveTo(Vector3 position)
+    public void Move(Vector3 position)
     {
-        position.y = transform.position.y;
-        _agent.SetDestination(position);
+        var destination = new Vector3(position.x, transform.position.y, position.z);
+        if (_agent.destination == destination)
+            return;
+
+        _agent.SetDestination(destination);
     }
 
     private void ConfigureAgent()

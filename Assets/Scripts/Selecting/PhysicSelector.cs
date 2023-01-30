@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PhysicSelector : ISelector
 {
-    private readonly Camera _camera;
     private readonly LayerMask _layer;
 
-    public PhysicSelector(Camera camera, LayerMask layer)
+    public PhysicSelector(LayerMask layer)
     {
-        _camera = camera;
         _layer = layer;
     }
 
@@ -19,24 +17,16 @@ public class PhysicSelector : ISelector
         var bounds = CreateBoundsByVertices(projectedVertices);
 
         foreach (var collider in Physics.OverlapBox(bounds.center, bounds.size / 2, Quaternion.identity, _layer))
-        {
-            var a = collider.GetComponent<ISelectable>();
             if (collider.TryGetComponent<ISelectable>(out var selectable))
                 yield return selectable;
-        }
     }
 
     private Vector3[] ProjectVerticesToPlane(Rect rect)
     {
         var vertices = new List<Vector3>();
         foreach (var vertex in rect.GetRectVertices())
-        {
-            var ray = _camera.ScreenPointToRay(vertex);
-            if (Physics.Raycast(ray, out var hit, 1000f, _layer))
-            {
-                vertices.Add(hit.point);
-            }
-        }
+            if (Convertor.ScreenToSurface(vertex, _layer, out var point))
+                vertices.Add(point);
 
         return vertices.ToArray();
     }

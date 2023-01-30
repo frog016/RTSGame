@@ -2,5 +2,5 @@
 
 public interface IMovement
 {
-    void MoveTo(Vector3 position);
+    void Move(Vector3 position);
 }
