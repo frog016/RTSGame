@@ -15,6 +15,14 @@ public class DiFactory : IFactory
         return _container.Instantiate<T>();
     }
 
+    public T CreatePrefab<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object
+    {
+        var createdObject = _container.InstantiatePrefab(prefab);
+        createdObject.transform.SetPositionAndRotation(position, rotation);
+
+        return createdObject as T;
+    }
+
     public T CreateFromPrefabForComponent<T>(T prefab, Vector3 position, Quaternion rotation) where T : Component
     {
         var createdObject = _container.InstantiatePrefabForComponent<T>(prefab);

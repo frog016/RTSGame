@@ -4,7 +4,6 @@ using UnityEngine;
 public abstract class AutomaticProducer : MonoBehaviour
 {
     [SerializeField] private float _producingTime;
-    [SerializeField] protected int _amount;
 
     protected abstract void Produce();
 

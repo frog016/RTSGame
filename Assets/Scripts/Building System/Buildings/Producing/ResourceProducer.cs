@@ -4,6 +4,7 @@ using Zenject;
 public class ResourceProducer : AutomaticProducer
 {
     [SerializeField] private Resource _resourceType;
+    [SerializeField] private int _amount;
 
     private ResourceStorage _resourceStorage;
 

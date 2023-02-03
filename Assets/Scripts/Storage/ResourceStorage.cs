@@ -23,8 +23,16 @@ public class ResourceStorage : ScriptableObject
 
     public void SpendResource(Resource resource, int amount)
     {
+        if (!IsEnough(resource, amount))
+            throw new InvalidOperationException($"The {resource} in storage is less than {amount}.");
+
         _storage[resource] -= amount;
         ResourceChangedEvent?.Invoke(resource, amount);
+    }
+
+    public bool IsEnough(Resource resource, int amount)
+    {
+        return amount <= _storage[resource];
     }
 
     private static Dictionary<Resource, int> CreateEmptyStorage()
