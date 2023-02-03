@@ -3,15 +3,25 @@ using Zenject;
 
 public class SelectionInstaller : MonoInstaller
 {
+    [SerializeField] private PlayerSelector _playerSelector;
     [SerializeField] private AreaSelector _areaSelector;
     [SerializeField] private RectTransform _selectionBox;
     [SerializeField] private LayerMask _selectorLayer;
 
     public override void InstallBindings()
     {
+        BindPlayerSelector();
         BindAreaSelector();
         BindAreaDrawer();
         BindSelector();
+    }
+
+    private void BindPlayerSelector()
+    {
+        Container
+            .Bind<PlayerSelector>()
+            .FromInstance(_playerSelector)
+            .AsSingle();
     }
 
     private void BindAreaSelector()

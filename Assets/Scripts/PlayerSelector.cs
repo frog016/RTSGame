@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,9 @@ using Zenject;
 
 public class PlayerSelector : MonoBehaviour
 {
+    public event Action<ISelectable[]> SelectedEvent; 
+    public event Action DeselectedEvent; 
+
     private ISelector _selector;
     private AreaSelector _areaSelector;
     private List<ISelectable> _selectedObject;
@@ -38,11 +42,15 @@ public class PlayerSelector : MonoBehaviour
         _selectedObject = _selector.Select(screenRect)
             .ApplyLazy(selectable => selectable.OnSelect())
             .ToList();
+
+        SelectedEvent?.Invoke(_selectedObject.ToArray());
     }
 
     private void Deselect()
     {
         _selectedObject
             .Apply(selectable => selectable.OnDeselect());
+
+        DeselectedEvent?.Invoke();
     }
 }
