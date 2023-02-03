@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-[RequireComponent(typeof(UnitSelector))]
+[RequireComponent(typeof(PlayerSelector))]
 public class Commander : MonoBehaviour
 {
     private Input _input;
-    private UnitSelector _selector;
+    private PlayerSelector _selector;
 
     [Inject]
     public void Constructor(Input input)
@@ -19,7 +19,7 @@ public class Commander : MonoBehaviour
 
     private void Awake()
     {
-        _selector = GetComponent<UnitSelector>();
+        _selector = GetComponent<PlayerSelector>();
     }
 
     private void SendCommand(InputAction.CallbackContext callbackContext)
@@ -43,7 +43,7 @@ public class Commander : MonoBehaviour
 
         var damageable = hit.collider.GetComponent<Damageable>();
         ICommand command = damageable != null ? new AttackCommand(damageable) : new MovementCommand(hit.point);
-        _selector.GetSelectedUnits<OrderExecutor>().Apply(executor => executeMode(executor, command));
+        _selector.GetSelectedObject<OrderExecutor>().Apply(executor => executeMode(executor, command));
     }
 
     private void OnDestroy()

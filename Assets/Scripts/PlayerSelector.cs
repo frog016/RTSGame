@@ -3,18 +3,18 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class UnitSelector : MonoBehaviour
+public class PlayerSelector : MonoBehaviour
 {
     private ISelector _selector;
     private AreaSelector _areaSelector;
-    private List<ISelectable> _selectedUnits;
+    private List<ISelectable> _selectedObject;
 
     [Inject]
     public void Constructor(ISelector selector, AreaSelector areaSelector)
     {
         _selector = selector;
         _areaSelector = areaSelector;
-        _selectedUnits = new List<ISelectable>();
+        _selectedObject = new List<ISelectable>();
     }
 
     private void OnEnable()
@@ -27,25 +27,22 @@ public class UnitSelector : MonoBehaviour
         _areaSelector.AreaSelectedEvent -= Select;
     }
 
-    public T[] GetSelectedUnits<T>()
+    public T[] GetSelectedObject<T>()
     {
-        return _selectedUnits
-            .Cast<Component>()
-            .Select(component => component.GetComponent<T>())
-            .ToArray();
+        return _selectedObject.SelectableAs<T>();
     }
 
     private void Select(Rect screenRect)
     {
         Deselect();
-        _selectedUnits = _selector.Select(screenRect)
+        _selectedObject = _selector.Select(screenRect)
             .ApplyLazy(selectable => selectable.OnSelect())
             .ToList();
     }
 
     private void Deselect()
     {
-        _selectedUnits
+        _selectedObject
             .Apply(selectable => selectable.OnDeselect());
     }
 }

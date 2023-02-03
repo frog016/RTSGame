@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 3594549297063068996}
   - component: {fileID: 3594549297063068997}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +237,7 @@ Transform:
   m_Children:
   - {fileID: 3594549297050144048}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3594549297063068998
 MonoBehaviour:

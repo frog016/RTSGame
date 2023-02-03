@@ -18,4 +18,4 @@ MonoBehaviour:
   - _resource: 1
     _price: 4
   _recruitingTime: 5.2
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 3594549297063068992, guid: a70b92830bef4c344a3e359ca406c036, type: 3}
